@@ -28,6 +28,11 @@ namespace Bookstore.Controllers
         [HttpPost]
         public IActionResult Create(Category newCategory)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Create");
+            }
+
             _db.Categories.Add(newCategory);
             _db.SaveChanges();
             return RedirectToAction("Index", "Category");
