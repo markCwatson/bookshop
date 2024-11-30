@@ -35,6 +35,7 @@ namespace Bookstore.Controllers
 
             _db.Categories.Add(newCategory);
             _db.SaveChanges();
+            TempData["success"] = "Category created successfully!";
             return RedirectToAction("Index", "Category");
         }
 
@@ -64,6 +65,7 @@ namespace Bookstore.Controllers
 
             _db.Categories.Update(updatedCategory);
             _db.SaveChanges();
+            TempData["success"] = "Category updated successfully!";
             return RedirectToAction("Index", "Category");
         }
 
@@ -99,6 +101,7 @@ namespace Bookstore.Controllers
 
             _db.Categories.Remove(toDelete);
             _db.SaveChanges();
+            TempData["success"] = "Category deleted successfully!";
             return RedirectToAction("Index", "Category");
         }
     }
