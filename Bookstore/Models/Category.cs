@@ -12,8 +12,8 @@ namespace Bookstore.Models
         [MaxLength(25)]
         public string Name { get; set; }
 
-        [DisplayName("Display Name")]
-        [Range(1, 100)]
+        [DisplayName("Display Order")]
+        [Range(1, 100, ErrorMessage="Display Order must be between 1 and 100")]
         public int DisplayOrder { get; set; }
     }
 }
