@@ -32,7 +32,7 @@ namespace Bookstore.Repositories
             dbSet.RemoveRange(entities);
         }
 
-        public T Get(Expression<Func<T, bool>> filter)
+        public T? Get(Expression<Func<T, bool>> filter)
         {
             IQueryable<T> query = dbSet;
             query = query.Where(filter);
@@ -42,7 +42,7 @@ namespace Bookstore.Repositories
         public IEnumerable<T> GetAll()
         {
             IQueryable<T> query = dbSet;
-            return query.ToList();
+            return [.. query]; // i.e. query.ToList();
         }
     }
 }
