@@ -8,16 +8,16 @@ namespace Bookstore.Controllers
     public class CategoryController : Controller
     {
         // AppDbContext registered in the services
-        private readonly ICategoryRepository _categoryRepository;
+        private readonly IRepositoryManager _repoMgr;
 
-        public CategoryController(ICategoryRepository categoryRepository)
+        public CategoryController(IRepositoryManager repoMgr)
         {
-            _categoryRepository = categoryRepository;
+            _repoMgr = repoMgr;
         }
 
         public IActionResult Index()
         {
-            List<Category> categories = _categoryRepository.GetAll().ToList();
+            List<Category> categories = [.. _repoMgr.CategoryRepo.GetAll()];
             return View(categories);
         }
 
@@ -34,8 +34,8 @@ namespace Bookstore.Controllers
                 return View("Create");
             }
 
-            _categoryRepository.Add(newCategory);
-            _categoryRepository.Save();
+            _repoMgr.CategoryRepo.Add(newCategory);
+            _repoMgr.Save();
             TempData["success"] = "Category created successfully!";
             return RedirectToAction("Index", "Category");
         }
@@ -47,7 +47,7 @@ namespace Bookstore.Controllers
                 return NotFound();
             }
 
-            Category? category = _categoryRepository.Get(obj => obj.Id == id);
+            Category? category = _repoMgr.CategoryRepo.Get(obj => obj.Id == id);
             if (category == null)
             {
                 return NotFound();
@@ -64,8 +64,8 @@ namespace Bookstore.Controllers
                 return View("Edit");
             }
 
-            _categoryRepository.Update(updatedCategory);
-            _categoryRepository.Save();
+            _repoMgr.CategoryRepo.Update(updatedCategory);
+            _repoMgr.Save();
             TempData["success"] = "Category updated successfully!";
             return RedirectToAction("Index", "Category");
         }
@@ -77,7 +77,7 @@ namespace Bookstore.Controllers
                 return NotFound();
             }
 
-            Category? category = _categoryRepository.Get(obj => obj.Id == id);
+            Category? category = _repoMgr.CategoryRepo.Get(obj => obj.Id == id);
             if (category == null)
             {
                 return NotFound();
@@ -94,14 +94,14 @@ namespace Bookstore.Controllers
                 return NotFound();
             }
 
-            Category? toDelete = _categoryRepository.Get(obj => obj.Id == id);
+            Category? toDelete = _repoMgr.CategoryRepo.Get(obj => obj.Id == id);
             if (toDelete == null)
             {
                 return NotFound();
             }
 
-            _categoryRepository.Delete(toDelete);
-            _categoryRepository.Save();
+            _repoMgr.CategoryRepo.Delete(toDelete);
+            _repoMgr.Save();
             TempData["success"] = "Category deleted successfully!";
             return RedirectToAction("Index", "Category");
         }

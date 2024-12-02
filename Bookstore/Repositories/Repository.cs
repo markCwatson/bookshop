@@ -34,15 +34,14 @@ namespace Bookstore.Repositories
 
         public T? Get(Expression<Func<T, bool>> filter)
         {
-            IQueryable<T> query = dbSet;
-            query = query.Where(filter);
+            IQueryable<T> query = dbSet.Where(filter);
             return query.FirstOrDefault();
         }
 
         public IEnumerable<T> GetAll()
         {
             IQueryable<T> query = dbSet;
-            return [.. query]; // i.e. query.ToList();
+            return [.. query];
         }
     }
 }
